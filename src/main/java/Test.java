@@ -17,25 +17,10 @@ public class Test {
 
         //获取resources文件夹的路径
         String resourcesPath = System.getProperty("user.dir") + "/src/main/resources/";
-        String filePath = resourcesPath + "Doc/Doc1.doc";
         String outputPath = resourcesPath + "output/";
         String outputFileName = "1.txt";
-        String outputContext = null;
 
-        String indexStr = ReadFile.readWord(filePath);
-        StringReader reader = new StringReader(indexStr);
-        TokenStream ts = analyzer.tokenStream(indexStr, reader);
-        Token t = ts.next();
-        while (t != null) {
-            if (outputContext == null){
-                outputContext = t.termText() + "  ";
-            } else{
-                outputContext += t.termText() + "  ";
-            }
-
-            System.out.print(t.termText() + "  ");
-            t = ts.next();
-        }
+        String outputContext = WordSegmentation.wordSegmentation();
 
         WriteFile.contentToTxt(outputPath, outputFileName, outputContext);
     }
