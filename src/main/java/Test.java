@@ -15,15 +15,28 @@ public class Test {
     public static void main(String[] args) throws Exception {
         Analyzer analyzer = new PaodingAnalyzer();
 
-        String filePath = "E:\\1.doc";
+        //获取resources文件夹的路径
+        String resourcesPath = System.getProperty("user.dir") + "/src/main/resources/";
+        String filePath = resourcesPath + "Doc/Doc1.doc";
+        String outputPath = resourcesPath + "output/";
+        String outputFileName = "1.txt";
+        String outputContext = null;
 
         String indexStr = ReadFile.readWord(filePath);
         StringReader reader = new StringReader(indexStr);
         TokenStream ts = analyzer.tokenStream(indexStr, reader);
         Token t = ts.next();
         while (t != null) {
-            System.out.print(t.termText()+"  ");
+            if (outputContext == null){
+                outputContext = t.termText() + "  ";
+            } else{
+                outputContext += t.termText() + "  ";
+            }
+
+            System.out.print(t.termText() + "  ");
             t = ts.next();
         }
+
+        WriteFile.contentToTxt(outputPath, outputFileName, outputContext);
     }
 }
