@@ -8,26 +8,32 @@ import java.io.*;
  */
 public class WriteFile {
     /**
-     * 写入内容至TXT文件
+     * 写入内容至TXT文件(若文件已存在，则覆盖原有内容)
      * @param outputPath
      * @param outputFileName
      * @param outputContext
      */
-    public static void writeTxt(String outputPath, String outputFileName, String outputContext) {
-        try {
-            File path = new File(outputPath);
-            File file = new File(outputPath + outputFileName);
+    public static void writeToTxt(String outputPath, String outputFileName, String outputContext) {
+            String str = new String();
 
-            if(!path.exists()){
-                path.mkdirs();
-            }
+            try {
+                File path = new File(outputPath);
+                File file = new File(outputPath + outputFileName);
 
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            //进行String到byte[]的转化
-            byte[] b = new byte[1024];
-            b = outputContext.getBytes();
+                if(!path.exists()){
+                    path.mkdirs();
+                }
 
-            fileOutputStream.write(b);
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+
+                //将新插入的内容存到str中
+                str += outputContext;
+
+                BufferedWriter output = new BufferedWriter(new FileWriter(file));
+                output.write(str);
+                output.close();
         } catch (IOException e) {
             System.out.println(e.toString());
         }

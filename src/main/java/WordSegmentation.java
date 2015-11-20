@@ -1,3 +1,4 @@
+import Entity.TF;
 import net.paoding.analysis.analyzer.PaodingAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
@@ -7,51 +8,82 @@ import java.io.StringReader;
 import java.util.*;
 
 /**
- * WordSegmentation
  * 切词类
  *
  * @author: yangch
  * @time: 2015/11/19 19:40
  */
 public class WordSegmentation {
-    public static String wordSegmentation () throws Exception {
+    /**
+     * 切词，并将文档编号、切出的词、词的出现次数、TF存储在List<TF>中
+     *
+     * @param docPath
+     * @return
+     * @throws Exception
+     */
+    public static List<TF> wordSegmentation(String docPath) throws Exception {
         Analyzer analyzer = new PaodingAnalyzer();
 
-        String resourcesPath = System.getProperty("user.dir") + "/src/main/resources/";
-        String filePath = resourcesPath + "Doc/Doc1.doc";
-        String outputContext = null;
+        //读出文档列表
+        List<String> fileNameList = ReadFile.listFileName(docPath);
 
-        String indexStr = ReadFile.readWord(filePath);
-        StringReader reader = new StringReader(indexStr);
-        TokenStream ts = analyzer.tokenStream(indexStr, reader);
-        //将Token、出现次数记录在Map中
-        //LinkedHashMap可以实现按顺序输出
-        Map<String, Integer> tokenMap = new LinkedHashMap<String, Integer>();
+        //记录文档编号
+        int docNumber = 1;
 
-        Token t = ts.next();
-        while (t != null) {
-            //若TokenMap中已存在此Token，则value自增1
-            if (tokenMap.get(t.termText()) != null) {
-                int count = tokenMap.get(t.termText()).intValue() + 1;
-                tokenMap.put(t.termText(), count);
-            } else {
-                tokenMap.put(t.termText(), 1);
+        //将文档编号、Term、出现次数、TF记录在tfList中
+        List<TF> tfList = new ArrayList<TF>();
+
+        for (String fileName : fileNameList) {
+            //获得文件地址
+            String filePath = docPath + fileName;
+
+            String indexStr = ReadFile.readWord(filePath);
+            StringReader reader = new StringReader(indexStr);
+            TokenStream ts = analyzer.tokenStream(indexStr, reader);
+
+            //将Term、出现次数记录在Map中，用LinkedHashMap可以实现按顺序输出
+            Map<String, Double> termMap = new LinkedHashMap<String, Double>();
+
+            //Max(TF)
+            Double maxTF = 1.00000;
+
+            Token t = ts.next();
+            while (t != null) {
+                if (termMap.get(t.termText()) != null) {
+                    //若termMap中已存在此Term，则value自增1
+                    Double count = (double) termMap.get(t.termText()).intValue() + 1;
+
+                    //更新MaxTF
+                    if (count > maxTF) {
+                        maxTF = count;
+                    }
+
+                    termMap.put(t.termText(), count);
+                }
+                //否则value = 1
+                else {
+                    termMap.put(t.termText(), 1.00000);
+                }
+
+                //读下一个Token
+                t = ts.next();
             }
 
-            //读下一个Token
-            t = ts.next();
-        }
+            //从termMap中取出Term、出现次数，然后根据Max(TF)算出TF，插入tfList中
+            for (Map.Entry<String, Double> entry : termMap.entrySet()) {
+                TF tf = new TF();
+                tf.setDocNumber(docNumber);
+                tf.setTerm(entry.getKey());
+                tf.setTermCount(entry.getValue());
+                tf.setTF(entry.getValue() / maxTF);
 
-        //输出到outputContext
-        for (Map.Entry<String, Integer> entry : tokenMap.entrySet()) {
-            if (outputContext == null){
-                outputContext = entry.getValue() + "  " + entry.getKey() + "\n";
-            } else{
-                outputContext += entry.getValue() + "  " + entry.getKey() + "\n";
+                tfList.add(tf);
             }
 
+            //文档编号自增
+            docNumber++;
         }
 
-        return outputContext;
+        return tfList;
     }
 }
