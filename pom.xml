@@ -9,16 +9,23 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+        <!--庖丁解牛分词-->
         <dependency>
-            <groupId>poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.0-FINAL</version>
+            <groupId>net.paoding.analysis.analyzer</groupId>
+            <artifactId>PaodingAnalyzer</artifactId>
+            <version>2.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/paoding-analysis.jar</systemPath>
         </dependency>
+
+        <!--日志工具，庖丁解牛依赖此包-->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <!--Lucene，庖丁解牛依赖此包-->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-analyzers</artifactId>
@@ -33,6 +40,13 @@
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-highlighter</artifactId>
             <version>2.2.0</version>
+        </dependency>
+
+        <!--Apache POI，用于读取Word文档-->
+        <dependency>
+            <groupId>poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.0-FINAL</version>
         </dependency>
     </dependencies>
 
