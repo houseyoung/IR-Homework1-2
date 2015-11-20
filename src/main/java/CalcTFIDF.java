@@ -26,13 +26,11 @@ public class CalcTFIDF {
         //将Term、IDF记录在Map中，用LinkedHashMap可以实现按顺序输出
         Map<String, Double> idfMap = new LinkedHashMap<String, Double>();
 
-        Double df = 0.00000;
-
         //计算DF，存储至dfMap
         for (TF tf : TFList) {
-            //若该词已存在于某文档中，则DF值加1
+            //若该词已出现过，则DF值加1
             if (dfMap.containsKey(tf.getTerm())) {
-                df = dfMap.get(tf.getTerm());
+                Double df = dfMap.get(tf.getTerm());
                 dfMap.put(tf.getTerm(), df + 1.00000);
             }
             //若该词为第一次出现，则DF值设为1
