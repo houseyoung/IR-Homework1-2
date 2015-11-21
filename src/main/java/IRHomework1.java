@@ -3,6 +3,7 @@ import Entity.TFIDF;
 import net.paoding.analysis.analyzer.PaodingAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,6 +14,9 @@ import java.util.List;
  */
 public class IRHomework1 {
     public static void main(String[] args) throws Exception {
+        //计时器开始
+        Date startTime = new Date();
+
         //获取resources文件夹的路径
         String resourcesPath = System.getProperty("user.dir") + "/src/main/resources/";
         //设置输入文件夹的路径
@@ -28,7 +32,7 @@ public class IRHomework1 {
         String outputDocInvertTFIDF = "docInvert(tfidf).txt";
 
         //对输入文件夹下所有文件进行切词，并获取每一个词的TF
-        List<TF> tfList = WordSegmentation.wordSegmentation(docPath);
+        List<TF> tfList = CalcTF.calcTF(docPath);
         //获取每一个词的TF*IDF
         List<TFIDF> tfidfList = CalcTFIDF.calcTFIDF(tfList, docPath);
 
@@ -42,5 +46,10 @@ public class IRHomework1 {
         Output.outputDocInvertTF(tfList, outputPath, outputDocInvertTF);
         //输出DocInvertTFIDF的内容
         Output.outputDocInvertTFIDF(tfidfList, outputPath, outputDocInvertTFIDF);
+
+        //计时器结束
+        Date endTime = new Date();
+        //输出消耗的时间
+        System.out.println((endTime.getTime() - startTime.getTime()) / 1000F + "秒");
     }
 }
