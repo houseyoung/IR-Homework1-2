@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ReadFile {
     /**
-     * 从Word文档中读取内容
+     * 从Word文档中读取全部内容
      * @param filePath
      * @return
      * @throws Exception
@@ -23,6 +23,25 @@ public class ReadFile {
 
         //获取Word文档中的全部文本
         String str = extractor.getText();
+
+        //关闭输入流
+        is.close();
+
+        return str;
+    }
+
+    /**
+     * 从Word文档中按行读取内容
+     * @param filePath
+     * @return
+     * @throws Exception
+     */
+    public static String[] readWordByLine(String filePath) throws Exception {
+        InputStream is = new FileInputStream(filePath);
+        WordExtractor extractor = new WordExtractor(is);
+
+        //获取Word文档中的全部文本
+        String str[] = extractor.getParagraphText();
 
         //关闭输入流
         is.close();
