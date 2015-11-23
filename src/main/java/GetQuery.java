@@ -1,3 +1,8 @@
+import Entity.TF;
+import Entity.TFIDF;
+import org.apache.poi.hssf.record.formula.functions.Int;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,15 +14,23 @@ import java.util.Map;
  */
 public class GetQuery {
     /**
-     * 从问题中得到Query，并输出至文本文档
-     * @param question
-     * @return
+     * 从问题List中依次获取Query，并将词、词的出现次数依次输出至TXT
+     * @param questionList
+     * @param queryPath
      * @throws Exception
      */
-    public static Map getQuery(String question) throws Exception{
-        //切词
-        Map<String, Double> queryMap = WordSegmentation.wordSegmentation(question);
+    public static void getQuery(List<String> questionList, String queryPath) throws Exception {
+        //问题计数
+        int countQuestion = 1;
 
-        return queryMap;
+        for (String question : questionList) {
+            //从问题进行切词，并将切出的词、词的出现次数存入Map中
+            Map<String, Integer> queryMap = WordSegmentation.wordSegmentation(question);
+            //输出词、词的出现次数至TXT文档
+            Output.outputQuery(queryMap, queryPath, "Query" + countQuestion + ".txt");
+
+            //问题计数自增
+            countQuestion++;
+        }
     }
 }

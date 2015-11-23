@@ -1,7 +1,5 @@
 import Entity.TF;
 import Entity.TFIDF;
-import net.paoding.analysis.analyzer.PaodingAnalyzer;
-import org.apache.lucene.analysis.Analyzer;
 
 import java.util.Date;
 import java.util.List;
@@ -13,13 +11,18 @@ import java.util.List;
  * @time: 2015/11/19 10:48
  */
 public class IRHomework1 {
+    /**
+     * 作业1
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         //计时器开始
         Date startTime = new Date();
 
         //获取resources文件夹的路径
         String resourcesPath = System.getProperty("user.dir") + "/src/main/resources/";
-        //设置输入文件夹的路径
+        //设置文档文件夹的路径
         String docPath = resourcesPath + "Doc/";
         //设置输出文件夹的路径
         String outputPath = resourcesPath + "output/";
@@ -31,9 +34,9 @@ public class IRHomework1 {
         String outputDocInvertTF = "docInvert(tf).txt";
         String outputDocInvertTFIDF = "docInvert(tfidf).txt";
 
-        //对输入文件夹下所有文件进行切词，并获取每一个词的TF
+        //对输入文件夹下所有文件进行切词，并计算每一个词的TF
         List<TF> tfList = CalcTF.calcTF(docPath);
-        //获取每一个词的TF*IDF
+        //计算每一个词的TF*IDF
         List<TFIDF> tfidfList = CalcTFIDF.calcTFIDF(tfList, docPath);
 
         //输出DocIndex的内容

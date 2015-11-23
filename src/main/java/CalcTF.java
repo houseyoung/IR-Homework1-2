@@ -12,8 +12,7 @@ import java.util.Map;
  */
 public class CalcTF {
     /**
-     * 计算TF，并将文档编号、切出的词、词的出现次数、TF存储在List<TF>中
-     *
+     * 从一组Word文档中切词，然后计算TF，将文档编号、切出的词、词的出现次数、TF存储在List<TF>中
      * @param docPath
      * @return
      * @throws Exception

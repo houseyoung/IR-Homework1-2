@@ -155,4 +155,27 @@ public class Output {
         //写入内容至TXT文件
         WriteFile.writeToTxt(outputPath, outputFile, outputContext);
     }
+
+    /**
+     * 输出Query
+     * @param queryMap
+     * @param outputPath
+     * @param outputFile
+     * @throws Exception
+     */
+    public static void outputQuery(Map<String, Integer> queryMap, String outputPath, String outputFile) throws Exception {
+        String outputContext = null;
+
+        for (Map.Entry<String, Integer> entry : queryMap.entrySet()) {
+            //输出到outputContext中
+            if (outputContext == null) {
+                outputContext = entry.getKey() + "\t" + entry.getValue() + "\n";
+            } else {
+                outputContext += entry.getKey() + "\t" + entry.getValue() + "\n";
+            }
+        }
+
+        //写入内容至TXT文件
+        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
+    }
 }

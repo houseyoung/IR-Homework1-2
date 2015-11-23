@@ -40,7 +40,7 @@ public class ReadFile {
         InputStream is = new FileInputStream(filePath);
         WordExtractor extractor = new WordExtractor(is);
 
-        //获取Word文档中的全部文本
+        //从Word文档中的按行获取文本
         String str[] = extractor.getParagraphText();
 
         //关闭输入流
@@ -95,5 +95,28 @@ public class ReadFile {
         int count = docPath.listFiles().length;
 
         return count;
+    }
+
+    /**
+     * 从TXT文档中按行读取内容，并按照TAB将内容分割
+     * @param filePath
+     * @return
+     * @throws Exception
+     */
+    public static List<String> readTextByLine(String filePath) throws Exception {
+        FileReader in = new FileReader(filePath);
+        BufferedReader br = new BufferedReader(in);
+
+        List<String> stringList = new ArrayList<String>();
+
+        String str = null;
+        while((str = br.readLine()) != null) {
+            stringList.add(str);
+        }
+
+        br.close();
+        in.close();
+
+        return stringList;
     }
 }
