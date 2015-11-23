@@ -1,3 +1,4 @@
+import Entity.DocSort;
 import Entity.TF;
 import Entity.TFIDF;
 
@@ -178,4 +179,36 @@ public class Output {
         //写入内容至TXT文件
         WriteFile.writeToTxt(outputPath, outputFile, outputContext);
     }
+
+    /**
+     * 输出Result
+     * @param docSortList
+     * @param outputPath
+     * @param outputFile
+     * @throws Exception
+     */
+    public static void outputResult(List<DocSort> docSortList, String outputPath, String outputFile) throws Exception {
+        String outputContext = null;
+
+        //实现Comparator，对docSortList按cos进行排序
+        Collections.sort(docSortList, new Comparator<DocSort>() {
+            @Override
+            public int compare(DocSort docSort1, DocSort docSort2) {
+                return docSort2.getCos().compareTo(docSort1.getCos());
+            }
+        });
+
+        for (DocSort docSort : docSortList) {
+            //输出到outputContext中
+            if (outputContext == null) {
+                outputContext = "Doc" + docSort.getDocNumber() + "\t" + docSort.getCos() + "\n";
+            } else {
+                outputContext += "Doc" + docSort.getDocNumber() + "\t" + docSort.getCos() + "\n";
+            }
+        }
+
+        //写入内容至TXT文件
+        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
+    }
+
 }

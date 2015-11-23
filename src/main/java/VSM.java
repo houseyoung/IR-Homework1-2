@@ -20,6 +20,8 @@ public class VSM {
         String questionFilePath = resourcesPath + "question.doc";
         //设置文档文件夹的路径
         String docPath = resourcesPath + "Doc/";
+        //设置文档文件夹的路径
+        String resultPath = resourcesPath + "output/result/";
 
         //获取问题List
         List<String> questionList = GetQuestion.getQuestion(questionFilePath);
@@ -95,15 +97,11 @@ public class VSM {
 
             }
 
-            //实现Comparator，对docSortList按cos进行排序
-            Collections.sort(docSortList, new Comparator<DocSort>() {
-                @Override
-                public int compare(DocSort docSort1, DocSort docSort2) {
-                    return docSort2.getCos().compareTo(docSort1.getCos());
-                }
-            });
-            docSortList = docSortList;
+            //输出Result
+            Output.outputResult(docSortList, resultPath, "Result" + (i + 1) + ".txt");
+
             System.out.println((i + 1) + "、<Doc" + docNumber + ">\n");
+
         }
 
         //计时器结束
