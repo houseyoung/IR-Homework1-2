@@ -1,3 +1,4 @@
+import Entity.DocSort;
 import Entity.TF;
 
 import java.util.*;
@@ -37,6 +38,9 @@ public class VSM {
             //对输入文件夹下所有文件进行切词，并计算每一个词的TF
             List<TF> tfList = CalcTF.calcTF(docPath);
 
+            //将文档编号、cos记录在List<DocSort>中
+            List<DocSort> docSortList = new ArrayList<DocSort>();
+
             //记录最大cos
             Double maxCos = 0.0;
 
@@ -75,14 +79,30 @@ public class VSM {
 
                 Double cos = DQ / Math.sqrt(Q2 * D2);
 
-//                Double cos = 2 * DQ / (D2 + Q2);
+                //将文档编号、cos记录在List<DocSort>中
+                DocSort docSort = new DocSort();
+                docSort.setDocNumber(doc);
+                docSort.setCos(cos);
+                docSortList.add(docSort);
+
                 if (cos > maxCos) {
                     maxCos = cos;
                     docNumber = doc;
                 }
 
+                //清空termMap
                 termMap = new LinkedHashMap<String, Double>();
+
             }
+
+            //实现Comparator，对docSortList按cos进行排序
+            Collections.sort(docSortList, new Comparator<DocSort>() {
+                @Override
+                public int compare(DocSort docSort1, DocSort docSort2) {
+                    return docSort2.getCos().compareTo(docSort1.getCos());
+                }
+            });
+            docSortList = docSortList;
             System.out.println((i + 1) + "、<Doc" + docNumber + ">\n");
         }
 
