@@ -50,6 +50,29 @@ public class ReadFile {
     }
 
     /**
+     * 从Word文档中读取前20个字符
+     * @param filePath
+     * @return
+     * @throws Exception
+     */
+    public static String readWordFirst20(String filePath) throws Exception {
+        InputStream is = new FileInputStream(filePath);
+        WordExtractor extractor = new WordExtractor(is);
+
+        //从Word文档中获取文本
+        String str = extractor.getText();
+        //去除换行符、TAB
+        str = str.replaceAll("\r|\n", "");
+        //截取前20个字符
+        str = str.substring(0, 19);
+
+        //关闭输入流
+        is.close();
+
+        return str;
+    }
+
+    /**
      * 列出目录中所有文件的文件名
      * @param path
      * @return
@@ -98,7 +121,7 @@ public class ReadFile {
     }
 
     /**
-     * 从TXT文档中按行读取内容，并按照TAB将内容分割
+     * 从TXT文档中按行读取内容
      * @param filePath
      * @return
      * @throws Exception

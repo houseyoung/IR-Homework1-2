@@ -7,8 +7,8 @@ public class DocSort {
     //文档编号
     private int docNumber;
 
-    //cos
-    private Double cos;
+    //相似度
+    private Double similarity;
 
     public int getDocNumber() {
         return docNumber;
@@ -18,11 +18,11 @@ public class DocSort {
         this.docNumber = docNumber;
     }
 
-    public Double getCos() {
-        return cos;
+    public Double getSimilarity() {
+        return similarity;
     }
 
-    public void setCos(Double cos) {
-        this.cos = cos;
+    public void setSimilarity(Double similarity) {
+        this.similarity = similarity;
     }
 }
