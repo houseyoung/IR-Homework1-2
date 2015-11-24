@@ -13,84 +13,91 @@ import java.util.*;
 public class Output {
     /**
      * 输出DocIndex
-     *
      * @param tfList
      * @param outputPath
      * @param outputFile
      * @throws Exception
      */
     public static void outputDocIndex(List<TF> tfList, String outputPath, String outputFile) throws Exception {
-        String outputContext = "";
+        //使用StringBuilder，使大量字符串拼接时减少内存及时间占用
+        StringBuilder outputContext = new StringBuilder();
 
         for (TF tf : tfList) {
             //保留5位小数
             String count = String.format("%.5f", tf.getTermCount());
 
             //输出到outputContext中
-            outputContext += tf.getDocNumber() + "\t" + count + " " + tf.getTerm() + "\n";
+            outputContext.append(tf.getDocNumber() + "\t" + count + " " + tf.getTerm() + "\n");
         }
 
+        //将StringBuilder转换为String
+        String str = outputContext.toString();
+
         //写入内容至TXT文件
-        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
+        WriteFile.writeToTxt(outputPath, outputFile, str);
     }
 
     /**
      * 输出DocIndexTF
-     *
      * @param tfList
      * @param outputPath
      * @param outputFile
      * @throws Exception
      */
     public static void outputDocIndexTF(List<TF> tfList, String outputPath, String outputFile) throws Exception {
-        String outputContext = "";
+        //使用StringBuilder，使大量字符串拼接时减少内存及时间占用
+        StringBuilder outputContext = new StringBuilder();
 
         for (TF tf : tfList) {
             //保留5位小数
             String tfFormat = String.format("%.5f", tf.getTF());
 
             //输出到outputContext中
-            outputContext += tf.getDocNumber() + "\t" + tfFormat + " " + tf.getTerm() + "\n";
+            outputContext.append(tf.getDocNumber() + "\t" + tfFormat + " " + tf.getTerm() + "\n");
         }
 
+        //将StringBuilder转换为String
+        String str = outputContext.toString();
         //写入内容至TXT文件
-        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
+        WriteFile.writeToTxt(outputPath, outputFile, str);
     }
 
     /**
      * 输出DocIndexTFIDF
-     *
      * @param tfidfList
      * @param outputPath
      * @param outputFile
      * @throws Exception
      */
     public static void outputDocIndexTFIDF(List<TFIDF> tfidfList, String outputPath, String outputFile) throws Exception {
-        String outputContext = "";
+        //使用StringBuilder，使大量字符串拼接时减少内存及时间占用
+        StringBuilder outputContext = new StringBuilder();
 
         for (TFIDF tfidf : tfidfList) {
             //保留5位小数
             String tfidfFormat = String.format("%.5f", tfidf.getTfIDF());
 
             //输出到outputContext中
-            outputContext += tfidf.getDocNumber() + "\t" + tfidfFormat + " " + tfidf.getTerm() + "\n";
-
+            outputContext.append(tfidf.getDocNumber() + "\t" + tfidfFormat + " " + tfidf.getTerm() + "\n");
         }
 
+        //将StringBuilder转换为String
+        String str = outputContext.toString();
+
         //写入内容至TXT文件
-        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
+        WriteFile.writeToTxt(outputPath, outputFile, str);
     }
 
     /**
      * 输出DocInvertTF
-     *
      * @param tfList
      * @param outputPath
      * @param outputFile
      * @throws Exception
      */
     public static void outputDocInvertTF(List<TF> tfList, String outputPath, String outputFile) throws Exception {
-        String outputContext = "";
+        //使用StringBuilder，使大量字符串拼接时减少内存及时间占用
+        StringBuilder outputContext = new StringBuilder();
 
         //实现Comparator，对tfList按Term进行排序
         Collections.sort(tfList, new Comparator<TF>() {
@@ -105,23 +112,26 @@ public class Output {
             String tfFormat = String.format("%.5f", tf.getTF());
 
             //输出到outputContext中
-            outputContext += tf.getTerm() + "\t" + tfFormat + " " + tf.getDocNumber() + "\n";
+            outputContext.append(tf.getTerm() + "\t" + tfFormat + " " + tf.getDocNumber() + "\n");
         }
 
+        //将StringBuilder转换为String
+        String str = outputContext.toString();
+
         //写入内容至TXT文件
-        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
+        WriteFile.writeToTxt(outputPath, outputFile, str);
     }
 
     /**
      * 输出DocInvertTFIDF
-     *
      * @param tfidfList
      * @param outputPath
      * @param outputFile
      * @throws Exception
      */
     public static void outputDocInvertTFIDF(List<TFIDF> tfidfList, String outputPath, String outputFile) throws Exception {
-        String outputContext = "";
+        //使用StringBuilder，使大量字符串拼接时减少内存及时间占用
+        StringBuilder outputContext = new StringBuilder();
 
         //实现Comparator，对tfidfList按Term进行排序
         Collections.sort(tfidfList, new Comparator<TFIDF>() {
@@ -136,37 +146,19 @@ public class Output {
             String tfidfFormat = String.format("%.5f", tfidf.getTfIDF());
 
             //输出到outputContext中
-            outputContext += tfidf.getTerm() + "\t" + tfidfFormat + " " + tfidf.getDocNumber() + "\n";
+            outputContext.append(tfidf.getTerm() + "\t" + tfidfFormat + " " + tfidf.getDocNumber() + "\n");
         }
 
-        //写入内容至TXT文件
-        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
-    }
-
-    /**
-     * 输出Query
-     *
-     * @param queryMap
-     * @param outputPath
-     * @param outputFile
-     * @throws Exception
-     */
-    public static void outputQuery(Map<String, Integer> queryMap, String outputPath, String outputFile) throws Exception {
-        String outputContext = "";
-
-        for (Map.Entry<String, Integer> entry : queryMap.entrySet()) {
-            //输出到outputContext中
-            outputContext += entry.getKey() + "\t" + entry.getValue() + "\n";
-
-        }
+        //将StringBuilder转换为String
+        String str = outputContext.toString();
 
         //写入内容至TXT文件
-        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
+        WriteFile.writeToTxt(outputPath, outputFile, str);
     }
+
 
     /**
      * 输出Result
-     *
      * @param docSortList
      * @param outputPath
      * @param outputFile
