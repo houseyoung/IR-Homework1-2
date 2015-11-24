@@ -2,7 +2,9 @@ import Entity.DocSort;
 import Entity.TF;
 import Entity.TFIDF;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * 输出结果类
@@ -13,6 +15,7 @@ import java.util.*;
 public class Output {
     /**
      * 输出DocIndex
+     *
      * @param tfList
      * @param outputPath
      * @param outputFile
@@ -39,6 +42,7 @@ public class Output {
 
     /**
      * 输出DocIndexTF
+     *
      * @param tfList
      * @param outputPath
      * @param outputFile
@@ -64,6 +68,7 @@ public class Output {
 
     /**
      * 输出DocIndexTFIDF
+     *
      * @param tfidfList
      * @param outputPath
      * @param outputFile
@@ -90,6 +95,7 @@ public class Output {
 
     /**
      * 输出DocInvertTF
+     *
      * @param tfList
      * @param outputPath
      * @param outputFile
@@ -124,6 +130,7 @@ public class Output {
 
     /**
      * 输出DocInvertTFIDF
+     *
      * @param tfidfList
      * @param outputPath
      * @param outputFile
@@ -159,6 +166,7 @@ public class Output {
 
     /**
      * 输出Result
+     *
      * @param docSortList
      * @param outputPath
      * @param outputFile

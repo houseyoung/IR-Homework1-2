@@ -13,6 +13,7 @@ import java.util.List;
 public class ReadFile {
     /**
      * 从Word文档中读取全部内容
+     *
      * @param filePath
      * @return
      * @throws Exception
@@ -32,6 +33,7 @@ public class ReadFile {
 
     /**
      * 从Word文档中按行读取内容
+     *
      * @param filePath
      * @return
      * @throws Exception
@@ -51,6 +53,7 @@ public class ReadFile {
 
     /**
      * 从Word文档中读取前20个字符
+     *
      * @param filePath
      * @return
      * @throws Exception
@@ -74,6 +77,7 @@ public class ReadFile {
 
     /**
      * 列出目录中所有文件的文件名
+     *
      * @param path
      * @return
      * @throws Exception
@@ -90,7 +94,7 @@ public class ReadFile {
 
         int filesLength = docPath.listFiles().length;
 
-        for (int i = 1;i <= filesLength; ++i) {
+        for (int i = 1; i <= filesLength; ++i) {
             File file = new File(docPath + "" + i + ".doc");
             //如果不是目录，则存入fileNameList
             if (!file.isDirectory()) {
@@ -103,6 +107,7 @@ public class ReadFile {
 
     /**
      * 计算目录中的文件数
+     *
      * @param path
      * @return
      * @throws Exception
@@ -122,6 +127,7 @@ public class ReadFile {
 
     /**
      * 从TXT文档中按行读取内容
+     *
      * @param filePath
      * @return
      * @throws Exception
@@ -133,7 +139,7 @@ public class ReadFile {
         List<String> stringList = new ArrayList<String>();
 
         String str = null;
-        while((str = br.readLine()) != null) {
+        while ((str = br.readLine()) != null) {
             stringList.add(str);
         }
 

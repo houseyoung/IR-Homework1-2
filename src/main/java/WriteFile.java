@@ -9,31 +9,32 @@ import java.io.*;
 public class WriteFile {
     /**
      * 写入内容至TXT文件(若文件已存在，则覆盖原有内容)
+     *
      * @param outputPath
      * @param outputFileName
      * @param outputContext
      */
     public static void writeToTxt(String outputPath, String outputFileName, String outputContext) {
-            String str = new String();
+        String str = new String();
 
-            try {
-                File path = new File(outputPath);
-                File file = new File(outputPath + outputFileName);
+        try {
+            File path = new File(outputPath);
+            File file = new File(outputPath + outputFileName);
 
-                if(!path.exists()){
-                    path.mkdirs();
-                }
+            if (!path.exists()) {
+                path.mkdirs();
+            }
 
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
 
-                //将新插入的内容存到str中
-                str += outputContext;
+            //将新插入的内容存到str中
+            str += outputContext;
 
-                BufferedWriter output = new BufferedWriter(new FileWriter(file));
-                output.write(str);
-                output.close();
+            BufferedWriter output = new BufferedWriter(new FileWriter(file));
+            output.write(str);
+            output.close();
         } catch (IOException e) {
             System.out.println(e.toString());
         }
@@ -41,6 +42,7 @@ public class WriteFile {
 
     /**
      * 向原有TXT文件中插入内容
+     *
      * @param outputPath
      * @param outputFileName
      * @param outputContext
@@ -55,7 +57,7 @@ public class WriteFile {
             File path = new File(outputPath);
             File file = new File(outputPath + outputFileName);
 
-            if(!path.exists()){
+            if (!path.exists()) {
                 path.mkdirs();
             }
 

@@ -1,7 +1,8 @@
 import Entity.DocSort;
 import Entity.TF;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * IRHomework2
@@ -12,6 +13,7 @@ import java.util.*;
 public class IRHomework2 {
     /**
      * 作业2
+     *
      * @param args
      * @throws Exception
      */
@@ -58,7 +60,7 @@ public class IRHomework2 {
             int rank = CalcRank.calcRank(docSortList, answer);
 
             //计算Rank倒数的总和
-            rankReciprocalCount += 1 / (double)rank;
+            rankReciprocalCount += 1 / (double) rank;
 
             //输出Result
             Output.outputResult(docSortList, i + 1, question, resultPath, "result(vectoral)" + (i + 1) + ".txt");

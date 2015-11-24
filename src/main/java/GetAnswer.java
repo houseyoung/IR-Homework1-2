@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * GetAnswer
@@ -10,8 +8,13 @@ import java.util.Map;
  * @time: 2015/11/24 8:35
  */
 public class GetAnswer {
+    /**
+     * 用List<Integer>记录答案
+     *
+     * @return
+     * @throws Exception
+     */
     public static List<Integer> getAnswer() throws Exception {
-        //用List记录答案
         List<Integer> answerList = new ArrayList<Integer>();
 
         answerList.add(1);

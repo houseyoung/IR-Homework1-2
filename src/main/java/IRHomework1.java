@@ -13,6 +13,7 @@ import java.util.List;
 public class IRHomework1 {
     /**
      * 作业1
+     *
      * @param args
      * @throws Exception
      */

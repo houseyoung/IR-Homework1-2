@@ -11,6 +11,7 @@ import java.util.List;
 public class CalcRank {
     /**
      * 计算Rank值
+     *
      * @param docSortList
      * @param answer
      * @return

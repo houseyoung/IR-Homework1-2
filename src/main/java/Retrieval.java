@@ -13,8 +13,8 @@ public class Retrieval {
     /**
      * 根据问题进行检索，使用余弦法计算相似度，将文档编号、相似度存储至List<DocSort>
      *
-     * @param questionList
-     * @param queryPath
+     * @param question
+     * @param tfList
      * @throws Exception
      */
     public static List<DocSort> getRetrieval(String question, List<TF> tfList) throws Exception {

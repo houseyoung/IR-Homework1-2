@@ -1,11 +1,11 @@
-import Entity.TF;
 import net.paoding.analysis.analyzer.PaodingAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 
 import java.io.StringReader;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 切词类
@@ -16,6 +16,7 @@ import java.util.*;
 public class WordSegmentation {
     /**
      * 对String进行切词，将切出的词、词的出现次数存入Map中
+     *
      * @param str
      * @return
      * @throws Exception
