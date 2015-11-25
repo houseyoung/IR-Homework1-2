@@ -21,18 +21,45 @@ public class Retrieval {
         //从问题进行切词，并将切出的词、词的出现次数存入Map中
         Map<String, Double> queryMap = WordSegmentation.wordSegmentation(question);
 
-        //将Term、出现次数记录在Map中，用LinkedHashMap可以实现按顺序输出
+        //将Term记录在Map中，用LinkedHashMap可以实现按顺序输出
         Map<String, Double> termMap = new LinkedHashMap<String, Double>();
 
         //将文档编号、相似度记录在List<DocSort>中
         List<DocSort> docSortList = new ArrayList<DocSort>();
 
+        //将queryMap中的词插入termMap中，出现次数计为0
+        for (Map.Entry<String, Double> entry : queryMap.entrySet()) {
+            boolean flag = termMap.containsKey(entry.getKey());
+            if (flag == false) {
+                termMap.put(entry.getKey(), 0.0);
+            }
+        }
+
+        //将所有文档切出的词存入termMap，出现次数计为0
+        for (TF tf : tfList) {
+            termMap.put(tf.getTerm(), 0.0);
+        }
+
+        //将termMap中存在的而queryMap中不存在的词插入queryMap中，出现次数计为0
+        for (Map.Entry<String, Double> entry : termMap.entrySet()) {
+            boolean flag = queryMap.containsKey(entry.getKey());
+            if (flag == false) {
+                queryMap.put(entry.getKey(), 0.0);
+            }
+        }
+
         //对30个文档依次进行检索
         for (int doc = 1; doc <= 30; doc++) {
-            //读取本次检索的文档切出的词及词的出现次数，存入termMap
+            //将termMap复制一份，以存入本次检索的文档切出的词及词的出现次数
+            Map<String, Double> nowMap = new LinkedHashMap<String, Double>();
+            for (Map.Entry<String, Double> entry : termMap.entrySet()) {
+                nowMap.put(entry.getKey(), entry.getValue());
+            }
+
             for (TF tf : tfList) {
+                //将本次检索的文档切出的词及词的出现次数，存入nowMap
                 if (tf.getDocNumber() == doc) {
-                    termMap.put(tf.getTerm(), tf.getTermCount());
+                    nowMap.put(tf.getTerm(), tf.getTermCount());
                 }
             }
 
@@ -46,18 +73,10 @@ public class Retrieval {
                 Q2 += entry.getValue() * entry.getValue();
             }
 
-            //计算D^2
-            for (Map.Entry<String, Double> entry : termMap.entrySet()) {
+            //计算D^2、D*Q
+            for (Map.Entry<String, Double> entry : nowMap.entrySet()) {
                 D2 += entry.getValue() * entry.getValue();
-            }
-
-            //计算D*Q
-            for (Map.Entry<String, Double> entry1 : termMap.entrySet()) {
-                for (Map.Entry<String, Double> entry2 : queryMap.entrySet()) {
-                    if (entry1.getKey() == entry2.getKey()) {
-                        DQ += entry1.getValue() * entry2.getValue();
-                    }
-                }
+                DQ += entry.getValue() * queryMap.get(entry.getKey());
             }
 
             //使用余弦法计算相似度
@@ -68,9 +87,6 @@ public class Retrieval {
             docSort.setDocNumber(doc);
             docSort.setSimilarity(similarity);
             docSortList.add(docSort);
-
-            //清空termMap
-            termMap = new LinkedHashMap<String, Double>();
         }
 
         //实现Comparator，对docSortList按相似度进行排序

@@ -59,6 +59,8 @@ public class IRHomework2 {
             //获取Rank值
             int rank = CalcRank.calcRank(docSortList, answer);
 
+            System.out.println(rank);
+            
             //计算Rank倒数的总和
             rankReciprocalCount += 1 / (double) rank;
 
