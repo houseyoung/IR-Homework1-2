@@ -19,13 +19,13 @@ public class CalcTF {
      * @throws Exception
      */
     public static List<TF> calcTF(String docPath) throws Exception {
-        //读出文档列表
+        //获取文档列表
         List<String> fileNameList = ReadFile.listFileName(docPath);
 
         //记录文档编号
         int docNumber = 1;
 
-        //将文档编号、Term、出现次数、TF记录在tfList中
+        //将文档编号、Term、出现次数、TF存储在tfList中
         List<TF> tfList = new ArrayList<TF>();
 
         for (String fileName : fileNameList) {
@@ -38,8 +38,8 @@ public class CalcTF {
             //切词
             Map<String, Double> termMap = WordSegmentation.wordSegmentation(str);
 
-            //最多出现次数
-            Double maxTF = 1.00000;
+            //记录最多出现次数
+            Double maxTF = 1.00;
 
             //从termMap中依次取出出现次数，找出最多出现次数
             for (Map.Entry<String, Double> entry : termMap.entrySet()) {
@@ -48,7 +48,7 @@ public class CalcTF {
                 }
             }
 
-            //从termMap中取出Term、出现次数，然后根据最多出现次数算出TF，插入tfList中
+            //从termMap中取出Term、出现次数，然后根据最多出现次数算出TF，存入tfList
             for (Map.Entry<String, Double> entry : termMap.entrySet()) {
                 TF tf = new TF();
                 tf.setDocNumber(docNumber);

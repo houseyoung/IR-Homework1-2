@@ -18,18 +18,16 @@ public class CalcRank {
      * @throws Exception
      */
     public static int calcRank(List<DocSort> docSortList, int answer) throws Exception {
-        //记录rank
-        int rank = 0;
-
-        //记录第几个文档获得正确答案
-        int number = 1;
+        int rank = 1;
 
         for (DocSort docSort : docSortList) {
             if (docSort.getDocNumber() == answer) {
-                rank = number;
+                //若文档编号与答案相等，则终止循环
+                break;
             }
-            //文档数自增
-            number++;
+
+            //rank自增
+            rank++;
         }
 
         return rank;

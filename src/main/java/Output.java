@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * 输出结果类
+ * 输出结果
  *
  * @author: yangch
  * @time: 2015/11/20 15:05
@@ -29,7 +29,7 @@ public class Output {
             //保留5位小数
             String count = String.format("%.5f", tf.getTermCount());
 
-            //输出到outputContext中
+            //存入outputContext
             outputContext.append(tf.getDocNumber() + "\t" + count + " " + tf.getTerm() + "\n");
         }
 
@@ -56,7 +56,7 @@ public class Output {
             //保留5位小数
             String tfFormat = String.format("%.5f", tf.getTF());
 
-            //输出到outputContext中
+            //存入outputContext
             outputContext.append(tf.getDocNumber() + "\t" + tfFormat + " " + tf.getTerm() + "\n");
         }
 
@@ -82,7 +82,7 @@ public class Output {
             //保留5位小数
             String tfidfFormat = String.format("%.5f", tfidf.getTfIDF());
 
-            //输出到outputContext中
+            //存入outputContext
             outputContext.append(tfidf.getDocNumber() + "\t" + tfidfFormat + " " + tfidf.getTerm() + "\n");
         }
 
@@ -117,7 +117,7 @@ public class Output {
             //保留5位小数
             String tfFormat = String.format("%.5f", tf.getTF());
 
-            //输出到outputContext中
+            //存入outputContext
             outputContext.append(tf.getTerm() + "\t" + tfFormat + " " + tf.getDocNumber() + "\n");
         }
 
@@ -152,7 +152,7 @@ public class Output {
             //保留5位小数
             String tfidfFormat = String.format("%.5f", tfidf.getTfIDF());
 
-            //输出到outputContext中
+            //存入outputContext
             outputContext.append(tfidf.getTerm() + "\t" + tfidfFormat + " " + tfidf.getDocNumber() + "\n");
         }
 
@@ -162,7 +162,6 @@ public class Output {
         //写入内容至TXT文件
         WriteFile.writeToTxt(outputPath, outputFile, str);
     }
-
 
     /**
      * 输出Result
@@ -179,8 +178,11 @@ public class Output {
         //设置文档文件夹的路径
         String docPath = resourcesPath + "Doc/";
 
+        //使用StringBuilder，使大量字符串拼接时减少内存及时间占用
+        StringBuilder outputContext = new StringBuilder();
+
         //设置第一行文字
-        String outputContext = "Request " + i + ": " + question + "\n";
+        outputContext.append("Request " + i + ": " + question + "\n");
 
         //若为第10个问题或第20个问题，则输出详细答案
         if (i == 10 || i == 20) {
@@ -191,21 +193,23 @@ public class Output {
                 //保留5位小数
                 String similarity = String.format("%.5f", docSort.getSimilarity());
 
-                //输出到outputContext中
-                outputContext += docSort.getDocNumber() + "\t" + similarity + "\t" + docFirst20 + "\n";
-            }
-        } else {
-            for (DocSort docSort : docSortList) {
-                //保留5位小数
-                String similarity = String.format("%.5f", docSort.getSimilarity());
-
-                //输出到outputContext中
-                outputContext += docSort.getDocNumber() + "\t" + similarity + "\n";
+                //存入outputContext
+                outputContext.append(docSort.getDocNumber() + "\t" + similarity + "\t" + docFirst20 + "\n");
             }
         }
 
-        //写入内容至TXT文件
-        WriteFile.writeToTxt(outputPath, outputFile, outputContext);
-    }
+        //其他问题只记录文档排序
+        else {
+            for (DocSort docSort : docSortList) {
+                //存入outputContext
+                outputContext.append(docSort.getDocNumber() + "\n");
+            }
+        }
 
+        //将StringBuilder转换为String
+        String str = outputContext.toString();
+
+        //写入内容至TXT文件
+        WriteFile.writeToTxt(outputPath, outputFile, str);
+    }
 }

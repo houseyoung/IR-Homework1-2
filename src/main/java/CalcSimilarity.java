@@ -1,6 +1,3 @@
-import Entity.DocSort;
-import Entity.TF;
-
 import java.util.*;
 
 /**

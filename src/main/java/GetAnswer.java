@@ -9,12 +9,12 @@ import java.util.List;
  */
 public class GetAnswer {
     /**
-     * 用List<Integer>记录答案
+     * 将答案存储在List中
      *
      * @return
      * @throws Exception
      */
-    public static List<Integer> getAnswer() throws Exception {
+    public static List<Integer> makeAnswerList() throws Exception {
         List<Integer> answerList = new ArrayList<Integer>();
 
         answerList.add(1);
@@ -55,5 +55,19 @@ public class GetAnswer {
         answerList.add(30);
 
         return answerList;
+    }
+
+    /**
+     * 根据问题编号获取答案
+     *
+     * @param questionNumber
+     * @return
+     * @throws Exception
+     */
+    public static int getAnswerByQuestion(int questionNumber) throws Exception {
+        List<Integer> answerList = makeAnswerList();
+        int answer = answerList.get(questionNumber);
+
+        return answer;
     }
 }

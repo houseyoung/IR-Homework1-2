@@ -21,34 +21,34 @@ public class CalcTFIDF {
      * @throws Exception
      */
     public static List<TFIDF> calcTFIDF(List<TF> TFList, String docPath) throws Exception {
-        //将Term、DF记录在Map中，用LinkedHashMap可以实现按顺序输出
+        //将Term、DF存储在Map中，用LinkedHashMap可以实现按顺序输出
         Map<String, Double> dfMap = new LinkedHashMap<String, Double>();
-        //将Term、IDF记录在Map中，用LinkedHashMap可以实现按顺序输出
+        //将Term、IDF存储在Map中，用LinkedHashMap可以实现按顺序输出
         Map<String, Double> idfMap = new LinkedHashMap<String, Double>();
 
-        //计算DF，存储至dfMap
+        //计算DF，存入dfMap
         for (TF tf : TFList) {
             //若该词已出现过，则DF值加1
             if (dfMap.containsKey(tf.getTerm())) {
                 Double df = dfMap.get(tf.getTerm());
-                dfMap.put(tf.getTerm(), df + 1.00000);
+                dfMap.put(tf.getTerm(), df + 1.0);
             }
             //若该词为第一次出现，则DF值设为1
             else {
-                dfMap.put(tf.getTerm(), 1.00000);
+                dfMap.put(tf.getTerm(), 1.0);
             }
         }
 
         //读出文档数目
         int count = ReadFile.countFileNumber(docPath);
 
-        //计算IDF，存储至idfMap
+        //计算IDF，存入idfMap
         for (Map.Entry<String, Double> entry : dfMap.entrySet()) {
             Double idf = Math.log10(count / entry.getValue());
             idfMap.put(entry.getKey(), idf);
         }
 
-        //计算TF*IDF，存储至tfidfList
+        //计算TF*IDF，存入tfidfList
         List<TFIDF> tfidfList = new ArrayList<TFIDF>();
         for (TF tf : TFList) {
             Double tfIDF = tf.getTF() * idfMap.get(tf.getTerm());

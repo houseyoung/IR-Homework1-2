@@ -19,7 +19,7 @@ public class IRHomework1 {
      */
     public static void main(String[] args) throws Exception {
         //计时器开始
-        Date startTime = new Date();
+        long startTime = System.currentTimeMillis();
 
         //获取resources文件夹的路径
         String resourcesPath = System.getProperty("user.dir") + "/src/main/resources/";
@@ -52,8 +52,8 @@ public class IRHomework1 {
         Output.outputDocInvertTFIDF(tfidfList, outputPath, outputDocInvertTFIDF);
 
         //计时器结束
-        Date endTime = new Date();
-        //输出消耗的时间
-        System.out.println((endTime.getTime() - startTime.getTime()) / 1000F + "秒");
+        long endTime = System.currentTimeMillis();
+        //打印消耗的时间
+        System.out.println((endTime - startTime) / 1000F + "秒");
     }
 }

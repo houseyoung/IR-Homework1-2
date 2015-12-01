@@ -8,14 +8,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 切词类
+ * 切词
  *
  * @author: yangch
  * @time: 2015/11/19 19:40
  */
 public class WordSegmentation {
     /**
-     * 对String进行切词，将切出的词、词的出现次数存入Map中
+     * 对String进行切词，将切出的词、词的出现次数存储在Map中
      *
      * @param str
      * @return
