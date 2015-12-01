@@ -1,8 +1,7 @@
 import Entity.DocSort;
 import Entity.TF;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * IRHomework2
@@ -36,8 +35,11 @@ public class IRHomework2 {
         //获取答案List
         List<Integer> answerList = GetAnswer.getAnswer();
 
-        //获取问题数
-        int questionNumber = questionList.size();
+        //获取问题总数
+        int questionCount = questionList.size();
+
+        //获取文档总数
+        int docCount = ReadFile.countFileNumber(docPath);
 
         //对输入文件夹下所有文件进行切词，将文档编号、切出的词、词的出现次数、TF存储在List<TF>中
         List<TF> tfList = CalcTF.calcTF(docPath);
@@ -46,12 +48,37 @@ public class IRHomework2 {
         Double rankReciprocalCount = 0.0;
 
         //对问题依次进行检索
-        for (int i = 0; i < questionNumber; i++) {
-            //第i个问题
+        for (int i = 0; i < questionCount; i++) {
+            //获取第i个问题
             String question = questionList.get(i);
 
-            //根据问题进行检索，使用余弦法计算相似度，将文档编号、相似度存储至List<DocSort>
-            List<DocSort> docSortList = Retrieval.getRetrieval(question, tfList);
+            //将文档编号、相似度记录在List<DocSort>中
+            List<DocSort> docSortList = new ArrayList<DocSort>();
+
+            //建立查询向量
+            Map<String, Double> queryMap = VSM.queryVector(question, tfList);
+
+            for (int docNumber = 1; docNumber <= docCount; docNumber++) {
+                //对每一个文档计算文档向量
+                Map<String, Double> termMap = VSM.documentVector(queryMap, tfList, docNumber);
+
+                //根据查询向量及文档向量进行检索，使用余弦法计算相似度
+                Double similarity = CalcSimilarity.calcSimilarity(queryMap, termMap);
+
+                //将文档编号、相似度记录在DocSort实体中，再存储至docSortList
+                DocSort docSort = new DocSort();
+                docSort.setDocNumber(docNumber);
+                docSort.setSimilarity(similarity);
+                docSortList.add(docSort);
+            }
+
+            //实现Comparator，对docSortList按相似度进行排序
+            Collections.sort(docSortList, new Comparator<DocSort>() {
+                @Override
+                public int compare(DocSort docSort1, DocSort docSort2) {
+                    return docSort2.getSimilarity().compareTo(docSort1.getSimilarity());
+                }
+            });
 
             //获得当前问题的答案
             Integer answer = answerList.get(i);
@@ -69,7 +96,7 @@ public class IRHomework2 {
         }
 
         //计算MRR值
-        Double MRR = rankReciprocalCount / questionNumber;
+        Double MRR = rankReciprocalCount / questionCount;
         System.out.println(MRR);
 
         //计时器结束
