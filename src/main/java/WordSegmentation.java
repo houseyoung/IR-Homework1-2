@@ -2,6 +2,7 @@ import net.paoding.analysis.analyzer.PaodingAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 import java.io.StringReader;
 import java.util.LinkedHashMap;
@@ -30,20 +31,17 @@ public class WordSegmentation {
         //将Term、出现次数记录在Map中，用LinkedHashMap可以实现按顺序输出
         Map<String, Double> termMap = new LinkedHashMap<String, Double>();
 
-        Token t = ts.next();
-        while (t != null) {
-            if (termMap.get(t.termText()) != null) {
+        CharTermAttribute offAtt = (CharTermAttribute) ts.addAttribute(CharTermAttribute.class);
+        while (ts.incrementToken()) {
+            if (termMap.get(offAtt.toString()) != null) {
                 //若termMap中已存在此Term，则value自增1
-                Double count = (double) termMap.get(t.termText()).intValue() + 1;
-                termMap.put(t.termText(), count);
+                Double count = (double) termMap.get(offAtt.toString()).intValue() + 1;
+                termMap.put(offAtt.toString(), count);
             }
             //否则value = 1
             else {
-                termMap.put(t.termText(), 1.00000);
+                termMap.put(offAtt.toString(), 1.00000);
             }
-
-            //读下一个Token
-            t = ts.next();
         }
         return termMap;
     }

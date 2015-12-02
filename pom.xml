@@ -15,7 +15,7 @@
             <artifactId>PaodingAnalyzer</artifactId>
             <version>2.0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/paoding-analysis.jar</systemPath>
+            <systemPath>${project.basedir}/lib/paoding-analysis-2.0.4.jar</systemPath>
         </dependency>
 
         <!--日志工具，庖丁解牛依赖此包-->
@@ -28,18 +28,18 @@
         <!--Lucene，庖丁解牛依赖此包-->
         <dependency>
             <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-analyzers</artifactId>
-            <version>2.2.0</version>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>4.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
-            <version>2.2.0</version>
+            <version>4.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-highlighter</artifactId>
-            <version>2.2.0</version>
+            <version>4.6.0</version>
         </dependency>
 
         <!--Apache POI，用于读取Word文档-->
