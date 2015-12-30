@@ -49,6 +49,9 @@ public class IRHomework2 {
         //查询扩展后Rank倒数的总和
         Double rankReciprocalCountAfterQE = 0.0;
 
+        //输出提示文字
+        System.out.println("Rank:\nBeforeQE\tAfterQE");
+
         //对问题依次进行检索
         for (int questionNumber = 0; questionNumber < questionCount; questionNumber++) {
             //获取问题内容
@@ -126,7 +129,7 @@ public class IRHomework2 {
             int rankAfterQE = CalcRank.calcRank(docSortListAfterQE, answer);
 
             //打印Rank值
-            System.out.println(rankBeforeQE + "\t" + rankAfterQE);
+            System.out.println(rankBeforeQE + "\t\t\t" + rankAfterQE);
 
             //计算查询扩展前的结果Rank倒数的总和
             rankReciprocalCountBeforeQE += 1 / (double)rankBeforeQE;
@@ -148,7 +151,7 @@ public class IRHomework2 {
         Double MRRAfterQE = rankReciprocalCountAfterQE / questionCount;
 
         //打印MRR值
-        System.out.println("\nBefore QE: " + MRRBeforeQE);
+        System.out.println("\nMRR:\nBefore QE: " + MRRBeforeQE);
         System.out.println("After QE: " + MRRAfterQE + "\n");
 
         //计时器结束
