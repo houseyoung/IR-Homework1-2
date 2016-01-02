@@ -65,4 +65,40 @@ public class CalcTF {
 
         return tfList;
     }
+
+    /**
+     * 对已经切好的Map计算TF，将切出的词、词的出现次数、TF存储在List<TF>中
+     *
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    public static List<TF> calcTF(Map<String, Double> map) throws Exception {
+        //记录最多出现次数
+        Double maxTF = 1.00;
+
+        //将文档编号、Term、出现次数、TF存储在tfList中
+        List<TF> tfList = new ArrayList<TF>();
+
+        //从map中依次取出出现次数，找出最多出现次数
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
+            if (entry.getValue() > maxTF) {
+                maxTF = entry.getValue();
+            }
+        }
+
+        //从termMap中取出Term、出现次数，然后根据最多出现次数算出TF，存入tfList
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
+            TF tf = new TF();
+            //文档编号设为0
+            tf.setDocNumber(0);
+            tf.setTerm(entry.getKey());
+            tf.setTermCount(entry.getValue());
+            tf.setTF(entry.getValue() / maxTF);
+
+            tfList.add(tf);
+        }
+
+        return tfList;
+    }
 }

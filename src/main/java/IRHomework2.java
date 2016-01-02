@@ -1,5 +1,6 @@
 import Entity.DocSort;
 import Entity.TF;
+import Entity.TFIDF;
 
 import java.util.*;
 
@@ -43,6 +44,9 @@ public class IRHomework2 {
         //对输入文件夹下所有文件进行切词，将文档编号、切出的词、词的出现次数、TF存储在List<TF>中
         List<TF> tfList = CalcTF.calcTF(docPath);
 
+        //根据tfList求tfidfList
+        List<TFIDF> tfidfList = CalcTFIDF.calcTFIDF(tfList, docPath);
+
         //查询扩展前Rank倒数的总和
         Double rankReciprocalCountBeforeQE = 0.0;
 
@@ -64,14 +68,14 @@ public class IRHomework2 {
             List<DocSort> docSortListAfterQE = new ArrayList<DocSort>();
 
             //获取查询扩展前的查询向量
-            Map<String, Double> queryMapBeforeQE = VSM.queryVector(question, tfList);
+            Map<String, Double> queryMapBeforeQE = VSM.queryVector(question, tfidfList);
 
             //将所有文档的文档向量存入List中，查询扩展时使用
             List<Map<String, Double>> termMapList = new ArrayList<Map<String, Double>>();
 
             for (int docNumber = 1; docNumber <= docCount; docNumber++) {
                 //对每一个文档依次计算文档向量
-                Map<String, Double> termMap = VSM.documentVector(queryMapBeforeQE, tfList, docNumber);
+                Map<String, Double> termMap = VSM.documentVector(queryMapBeforeQE, tfidfList, docNumber);
 
                 //将该文档向量存储至文档向量List中
                 termMapList.add(termMap);
