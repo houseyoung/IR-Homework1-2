@@ -3,9 +3,7 @@
 
 ## 作业一：索引的建立
 1. 切词及词频统计：利用已提供的海量智能分词软件(代码中使用的是庖丁解牛Paoding Analyzer)对文档进行切词处理，并进行词频统计，形成DocIndex文件，结构为：文档号、频率、词。
-2. 分配词权重：采用词频标准化tfi=tfi/Max(tf)和tf*idf两种方式分配词的权重。由DocIndex文件生成DocIndex(tf)和DocIndex(tf*idf)文件。
-
-注意阈值的确定，词的取舍。
+2. 分配词权重：采用词频标准化tfi=tfi/Max(tf)和tf*idf两种方式分配词的权重。由DocIndex文件生成DocIndex(tf)和DocIndex(tf*idf)文件。注意阈值的确，词的取舍。
 3. 形成倒置文档：将DocIndex(tf)和DocIndex(tf*idf)文件转换为DocInvert(tf)和DocInvert (tf*idf)文件。
 
 
